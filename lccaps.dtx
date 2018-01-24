@@ -1,0 +1,156 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2018 by Ruben Giannotti 
+% <ruben dot giannotti at gmx dot net>
+% -------------------------------------------------------
+% 
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3c of this license or (at your option) any
+% later version. The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions
+% of LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Ruben Giannotti.
+%
+% This work consists of the files
+%   lccaps.dtx 
+%   lccaps.ins
+% and the derived file lccaps.sty.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{lccaps.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{lccaps}
+%<*package>
+  [2018/01/21 v1.0 Lowercased (spaced) small capitals (RG)]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{amssymb,parskip}
+\usepackage{lccaps}
+\providecommand*\pkg{\textsf}
+\providecommand*\option{\textit}
+\providecommand*\url{\texttt}
+\providecommand*\email{\texttt}
+\providecommand*\important{$\blacktriangleright$\space Important note:\space}
+\EnableCrossrefs
+\CodelineIndex
+\begin{document}
+  \DocInput{lccaps.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{60}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v1.0}{2018/01/21}{Initial version}
+%
+% \GetFileInfo{lccaps.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment,\!,\@empty,\@gobble,\@gobbletwo}
+% \DoNotIndex{\@ifpackageloaded,\@ifpackagewith,\@ifundefined,\@namedef}
+% \DoNotIndex{\@nil,\@onlypreamble,\@tempa,\@tempb,\@tempswafalse,\def}
+% \DoNotIndex{\@tempswatrue,\^,\-,\active,\begingroup,\catcode,\@car,\@cdr}
+% \DoNotIndex{\edef,\else,\endgroup,\endinput,\expandafter,\fi,\if}
+% \DoNotIndex{\if@tempswa,\ifcase,\ifnum,\ifx,\lccode,\let,\lowercase}
+% \DoNotIndex{\MessageBreak,\next,\number,\numexpr,\or,\PackageError}
+% \DoNotIndex{\PackageWarning,\PackageWarningNoLine,\strip@prefix,\@@end}
+% \DoNotIndex{\relax,\space,\string,\DeclareOption,\ProcessOptions}
+% \DoNotIndex{\meaning,\ifdefined,\csname,\chardef,\endcsname,\protect}
+% \DoNotIndex{\input,\RequirePackage,\global,\ifcsname,\makeatother}
+% \DoNotIndex{\@makeother,\the,\toks@}
+%
+% \title{The \pkg{lccaps} package\thanks{This document
+%   corresponds to \pkg{lccaps}~\fileversion, dated \filedate.}}
+% \author{Ruben Giannotti\thanks{\email{ruben dot giannotti at gmx dot net}}}
+%
+% \maketitle
+%
+% This tiny package serves the mere purpose of
+% providing a uniform method to use
+% lowercased small capitals (and spaced lowercased small capitals).
+% It relies on the \pkg{iftex}, \pkg{textcase} and \pkg{microtype} package
+% and comes with four new user macros.
+%
+% \DescribeMacro{\textlcc}
+% This is the main feature.
+% It produces forced lowercased \textlcc{small capitals}.
+%
+% \DescribeMacro{\spacedcaps}
+% This is more of an auxiliary macro.
+% But, it can be used at the user level of course.
+% It is meant to be used as a prefix to |\textlcc| or |\textsc|
+% which results in a slightly wider spacing between small capitals:
+%
+% \begin{center}
+%   |\spacedcaps\textlcc{Spaced capitals}| \(\leadsto\)
+%     \spacedcaps\textlcc{Spaced capitals}
+% \end{center}
+%
+% \DescribeMacro{\textslcc}
+% \DescribeMacro{\textssc}
+% Those two are just shorthands for the last mentioned.
+% Technically the very last one exceeds the scope of this package.
+% It is a simple byproduct that should not be harmful.
+%
+% \StopEventually{}
+%
+%    \begin{macrocode}
+\RequirePackage{iftex}
+\RequirePackage{textcase}
+\RequirePackage{microtype}
+\protected\def\lcc@warning{\PackageWarning{lccaps}}
+\DeclareRobustCommand\textlcc[1]{\textsc{\MakeTextLowercase{#1}}}
+\def\spacedcaps#1{%
+  \let\reserved@a=#1%
+  \ifnum
+    \ifx\reserved@a\textsc1\else
+    \ifx\reserved@a\textlcc1\else
+    0\fi\fi
+  =1
+    \expandafter\reserved@lcc
+  \else
+    \lcc@warning{The token preceeding \noexpand\spacedcaps
+      wasn't meant to typeset small capitals, so nothing happend.}%
+    \expandafter\reserved@a
+  \fi
+}
+\def\reserved@lcc#1{%
+  \expandafter\@spacedcaps\expandafter{\reserved@a{#1}}%
+}
+\ifXeTeX
+  \def\@spacedcaps#1{\bgroup\addfontfeature{LetterSpace=5.0}#1\egroup}
+\else
+  \def\@spacedcaps{\textls[50]}
+\fi
+\DeclareRobustCommand\textslcc{\spacedcaps\textlcc}
+\DeclareRobustCommand\textssc{\spacedcaps\textsc}
+%    \end{macrocode}
+%\Finale
+\endinput
